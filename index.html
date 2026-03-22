@@ -1,0 +1,1035 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>护盾 Shield — 女性安全资源平台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@400;700;900&family=DM+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1008;
+    --paper: #f5f0e8;
+    --warm-white: #faf7f2;
+    --accent: #c0392b;
+    --accent-soft: #e8c5c0;
+    --gold: #b8860b;
+    --muted: #7a6e62;
+    --border: #d4c9b8;
+    --card-bg: #fff9f0;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'Noto Serif SC', serif;
+    overflow-x: hidden;
+  }
+
+  /* ── NOISE TEXTURE OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: var(--ink);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 3rem;
+    height: 56px;
+    border-bottom: 2px solid var(--accent);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    color: var(--paper);
+    letter-spacing: 0.05em;
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+  }
+
+  .nav-logo span {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    color: var(--accent-soft);
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--border);
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+  }
+
+  .nav-links a:hover { color: var(--accent-soft); }
+
+  .nav-emergency {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 0.4rem 1rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.2s;
+  }
+  .nav-emergency:hover { background: #a93226; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 90vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 5rem;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+
+  .hero-label::before {
+    content: '';
+    display: inline-block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+    color: var(--ink);
+    margin-bottom: 2rem;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--accent);
+  }
+
+  .hero-desc {
+    font-size: 1.05rem;
+    line-height: 1.9;
+    color: var(--muted);
+    max-width: 480px;
+    margin-bottom: 3rem;
+    border-left: 3px solid var(--accent-soft);
+    padding-left: 1.2rem;
+  }
+
+  .hero-cta {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .btn-primary {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+
+  .btn-primary:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+
+  .btn-outline {
+    background: transparent;
+    color: var(--ink);
+    padding: 0.85rem 2rem;
+    text-decoration: none;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.8rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    border: 2px solid var(--ink);
+    transition: all 0.25s;
+    display: inline-block;
+  }
+
+  .btn-outline:hover {
+    background: var(--ink);
+    color: var(--paper);
+  }
+
+  .hero-right {
+    background: var(--ink);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .hero-graphic {
+    width: 320px;
+    height: 320px;
+    position: relative;
+  }
+
+  .shield-outer {
+    width: 100%;
+    height: 100%;
+    border: 2px solid rgba(192,57,43,0.4);
+    border-radius: 50%;
+    position: absolute;
+    animation: pulse-ring 3s ease-in-out infinite;
+  }
+
+  .shield-mid {
+    width: 78%;
+    height: 78%;
+    border: 1px solid rgba(192,57,43,0.25);
+    border-radius: 50%;
+    position: absolute;
+    top: 11%; left: 11%;
+    animation: pulse-ring 3s ease-in-out infinite 0.5s;
+  }
+
+  @keyframes pulse-ring {
+    0%, 100% { transform: scale(1); opacity: 0.6; }
+    50% { transform: scale(1.04); opacity: 1; }
+  }
+
+  .shield-svg {
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+  }
+
+  .hero-tag {
+    position: absolute;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(245,240,232,0.3);
+  }
+
+  .hero-tag-1 { top: 15%; left: 10%; }
+  .hero-tag-2 { bottom: 20%; right: 8%; }
+  .hero-tag-3 { top: 50%; left: 5%; }
+
+  /* ── STATS BAND ── */
+  .stats-band {
+    background: var(--accent);
+    padding: 1.2rem 5rem;
+    display: flex;
+    gap: 4rem;
+    align-items: center;
+    overflow-x: auto;
+  }
+
+  .stat-item {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+    white-space: nowrap;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: white;
+    font-weight: 700;
+  }
+
+  .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.75);
+  }
+
+  /* ── SECTION HEADER ── */
+  .section-header {
+    text-align: center;
+    padding: 5rem 2rem 3rem;
+  }
+
+  .section-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    line-height: 1.2;
+  }
+
+  /* ── FOUR PILLARS ── */
+  .pillars {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 0;
+    border-top: 1px solid var(--border);
+    border-left: 1px solid var(--border);
+    margin: 0 3rem 5rem;
+  }
+
+  .pillar-card {
+    background: var(--card-bg);
+    border-right: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    padding: 2.5rem 2rem;
+    cursor: pointer;
+    transition: background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillar-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 0; height: 3px;
+    background: var(--accent);
+    transition: width 0.3s ease;
+  }
+
+  .pillar-card:hover { background: white; }
+  .pillar-card:hover::after { width: 100%; }
+
+  .pillar-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.15em;
+    color: var(--muted);
+    margin-bottom: 1.5rem;
+  }
+
+  .pillar-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    display: block;
+  }
+
+  .pillar-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem;
+    margin-bottom: 0.8rem;
+    line-height: 1.3;
+  }
+
+  .pillar-desc {
+    font-size: 0.88rem;
+    line-height: 1.8;
+    color: var(--muted);
+  }
+
+  .pillar-arrow {
+    display: inline-block;
+    margin-top: 1.5rem;
+    font-family: 'DM Mono', monospace;
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  /* ── FEATURED CONTENT ── */
+  .featured-section {
+    background: var(--ink);
+    padding: 5rem;
+    margin-bottom: 0;
+  }
+
+  .featured-section .section-label { color: var(--accent-soft); }
+  .featured-section .section-title { color: var(--paper); text-align: left; }
+  .featured-section .section-header { text-align: left; padding: 0 0 3rem; }
+
+  .featured-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 1.5px;
+    background: rgba(255,255,255,0.08);
+  }
+
+  .featured-card {
+    background: #231a10;
+    padding: 2rem;
+    transition: background 0.2s;
+    cursor: pointer;
+  }
+
+  .featured-card:hover { background: #2d2015; }
+
+  .featured-card.large { padding: 3rem; }
+
+  .card-tag {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .card-tag::before {
+    content: '';
+    display: inline-block;
+    width: 16px; height: 1px;
+    background: var(--accent);
+  }
+
+  .card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    color: var(--paper);
+    line-height: 1.35;
+    margin-bottom: 1rem;
+  }
+
+  .featured-card.large .card-title { font-size: 1.8rem; }
+
+  .card-body {
+    font-size: 0.85rem;
+    line-height: 1.85;
+    color: rgba(245,240,232,0.55);
+    margin-bottom: 1.5rem;
+  }
+
+  .card-link {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    text-decoration: none;
+    border-bottom: 1px solid rgba(232,197,192,0.3);
+    padding-bottom: 1px;
+    transition: border-color 0.2s;
+  }
+
+  .card-link:hover { border-color: var(--accent-soft); }
+
+  /* ── EMERGENCY BANNER ── */
+  .emergency-banner {
+    background: var(--accent);
+    padding: 3rem 5rem;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 3rem;
+  }
+
+  .emergency-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    color: white;
+    margin-bottom: 0.5rem;
+  }
+
+  .emergency-desc {
+    font-size: 0.9rem;
+    color: rgba(255,255,255,0.8);
+    line-height: 1.7;
+  }
+
+  .emergency-grid {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .emergency-item {
+    background: rgba(255,255,255,0.15);
+    padding: 0.8rem 1.2rem;
+    border: 1px solid rgba(255,255,255,0.3);
+    text-align: center;
+    min-width: 120px;
+  }
+
+  .emergency-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.4rem;
+    color: white;
+    font-weight: 500;
+    display: block;
+  }
+
+  .emergency-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.7);
+  }
+
+  /* ── TOPICS INDEX ── */
+  .topics-section {
+    padding: 5rem;
+    background: var(--warm-white);
+  }
+
+  .topics-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    margin-top: 3rem;
+  }
+
+  .topic-item {
+    background: var(--warm-white);
+    padding: 1.5rem 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.15s;
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  .topic-item:hover { background: white; }
+
+  .topic-name {
+    font-size: 0.95rem;
+    line-height: 1.4;
+  }
+
+  .topic-count {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    color: var(--muted);
+    white-space: nowrap;
+    margin-left: 1rem;
+  }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink);
+    padding: 4rem 5rem 2rem;
+    color: rgba(245,240,232,0.5);
+  }
+
+  .footer-top {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr 1fr;
+    gap: 4rem;
+    padding-bottom: 3rem;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 2rem;
+  }
+
+  .footer-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    color: var(--paper);
+    margin-bottom: 1rem;
+  }
+
+  .footer-tagline {
+    font-size: 0.85rem;
+    line-height: 1.8;
+  }
+
+  .footer-col-title {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--accent-soft);
+    margin-bottom: 1.2rem;
+  }
+
+  .footer-links {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+  }
+
+  .footer-links a {
+    color: rgba(245,240,232,0.45);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--paper); }
+
+  .footer-bottom {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .hero-label { animation: fadeUp 0.6s ease both; }
+  .hero-title { animation: fadeUp 0.7s ease 0.1s both; }
+  .hero-desc { animation: fadeUp 0.7s ease 0.2s both; }
+  .hero-cta { animation: fadeUp 0.7s ease 0.3s both; }
+
+  /* ── MODAL ── */
+  .modal-overlay {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(26,16,8,0.85);
+    z-index: 500;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: var(--warm-white);
+    max-width: 500px;
+    width: 90%;
+    padding: 3rem;
+    position: relative;
+    border-top: 4px solid var(--accent);
+  }
+
+  .modal-close {
+    position: absolute;
+    top: 1rem; right: 1rem;
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: var(--muted);
+  }
+
+  .modal-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .modal-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 1.5rem;
+  }
+
+  .hotline-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hotline-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    background: white;
+    border-left: 3px solid var(--accent);
+  }
+
+  .hotline-name { font-size: 0.9rem; }
+
+  .hotline-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 1.2rem;
+    color: var(--accent);
+    text-decoration: none;
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-right { display: none; }
+    .pillars { grid-template-columns: 1fr 1fr; margin: 0 1.5rem 3rem; }
+    .featured-grid { grid-template-columns: 1fr; }
+    .emergency-banner { grid-template-columns: 1fr; }
+    .topics-grid { grid-template-columns: 1fr 1fr; }
+    .footer-top { grid-template-columns: 1fr 1fr; }
+    .stats-band { padding: 1.2rem 2rem; gap: 2rem; }
+    .hero-left { padding: 3rem 2rem; }
+    .featured-section, .topics-section { padding: 3rem 2rem; }
+    .emergency-banner { padding: 2.5rem 2rem; }
+    footer { padding: 3rem 2rem 1.5rem; }
+  }
+
+  @media (max-width: 1200px) and (min-width: 901px) {
+    .pillars { grid-template-columns: repeat(3, 1fr); }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    护盾 <span>Shield · 女性安全资源平台</span>
+  </div>
+  <ul class="nav-links">
+    <li><a href="#pillars">四大主题</a></li>
+    <li><a href="#featured">精选资料</a></li>
+    <li><a href="#topics">主题索引</a></li>
+    <li><a href="#about">关于我们</a></li>
+  </ul>
+  <button class="nav-emergency" onclick="openModal()">⚡ 紧急求助</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <p class="hero-label">女性安全资源平台 · 知识即力量</p>
+    <h1 class="hero-title">
+      知识，<br>
+      是最<em>坚实</em><br>
+      的盾牌。
+    </h1>
+    <p class="hero-desc">
+      这里收录自卫技巧、法律维权、紧急资源与心理支持，
+      提供结构清晰、实际可用的中文资料——让每一位女性在需要的时候，
+      都能找到她所需要的一切。
+    </p>
+    <div class="hero-cta">
+      <a href="#pillars" class="btn-primary">开始探索</a>
+      <a href="#topics" class="btn-outline">主题索引</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <p class="hero-tag hero-tag-1">自卫 · 法律 · 求助 · 疗愈</p>
+    <p class="hero-tag hero-tag-2">知识 · 力量 · 行动</p>
+    <p class="hero-tag hero-tag-3">Shield Platform</p>
+    <div class="hero-graphic">
+      <div class="shield-outer"></div>
+      <div class="shield-mid"></div>
+      <svg class="shield-svg" width="120" height="140" viewBox="0 0 120 140" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M60 8L12 28V72C12 98 36 120 60 132C84 120 108 98 108 72V28L60 8Z" stroke="#c0392b" stroke-width="1.5" fill="none"/>
+        <path d="M60 20L24 36V72C24 92 42 110 60 120C78 110 96 92 96 72V36L60 20Z" stroke="rgba(192,57,43,0.35)" stroke-width="1" fill="none"/>
+        <line x1="60" y1="50" x2="60" y2="90" stroke="#c0392b" stroke-width="1.5"/>
+        <line x1="40" y1="70" x2="80" y2="70" stroke="#c0392b" stroke-width="1.5"/>
+        <circle cx="60" cy="70" r="4" fill="#c0392b"/>
+      </svg>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-band">
+  <div class="stat-item">
+    <span class="stat-num">200+</span>
+    <span class="stat-label">精选资料条目</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">4</span>
+    <span class="stat-label">核心主题领域</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">持续</span>
+    <span class="stat-label">更新维护中</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-num">免费</span>
+    <span class="stat-label">开放取用</span>
+  </div>
+</div>
+
+<!-- PILLARS -->
+<section id="pillars">
+  <div class="section-header">
+    <p class="section-label">五大主题</p>
+    <h2 class="section-title">从预防到复原，全面支援</h2>
+  </div>
+  <div class="pillars" id="pillars-grid">
+    <div class="pillar-card">
+      <p class="pillar-num">01 / 05</p>
+      <span class="pillar-icon">🛡️</span>
+      <h3 class="pillar-title">自卫技巧</h3>
+      <p class="pillar-desc">图文步骤、情境模拟与视频资源。从日常防范意识到实际应对技巧，涵盖公共场所、夜间出行、网络骚扰等各类场景。</p>
+      <span class="pillar-arrow">→ 浏览资料</span>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-num">02 / 05</p>
+      <span class="pillar-icon">⚖️</span>
+      <h3 class="pillar-title">法律与维权</h3>
+      <p class="pillar-desc">《反家庭暴力法》《妇女权益保障法》《性骚扰防治》等法律通俗解读，含报案流程、人身安全保护令申请指引。</p>
+      <span class="pillar-arrow">→ 浏览资料</span>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-num">03 / 05</p>
+      <span class="pillar-icon">📞</span>
+      <h3 class="pillar-title">紧急求助资源</h3>
+      <p class="pillar-desc">全国及各省市热线电话、庇护机构、妇联组织、法律援助中心，按需求类型分类整理，快速查阅。</p>
+      <span class="pillar-arrow">→ 浏览资料</span>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-num">04 / 05</p>
+      <span class="pillar-icon">🌱</span>
+      <h3 class="pillar-title">心理支持与复原</h3>
+      <p class="pillar-desc">创伤知情资料、自我照顾指引，以及如何在国内寻找心理咨询资源的完整指南，包括公益渠道与低价选项。</p>
+      <span class="pillar-arrow">→ 浏览资料</span>
+    </div>
+    <div class="pillar-card">
+      <p class="pillar-num">05 / 05</p>
+      <span class="pillar-icon">📊</span>
+      <h3 class="pillar-title">数据与研究</h3>
+      <p class="pillar-desc">收录国内外学术报告、调查数据、深度新闻报道，用事实与数据支撑女性安全议题，提供可引用的权威参考。</p>
+      <span class="pillar-arrow">→ 浏览资料</span>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURED CONTENT -->
+<section class="featured-section" id="featured">
+  <div class="section-header">
+    <p class="section-label">精选资料</p>
+    <h2 class="section-title">最多人查阅的<br>入门指引</h2>
+  </div>
+  <div class="featured-grid">
+    <div class="featured-card large">
+      <p class="card-tag">自卫技巧 · 入门</p>
+      <h3 class="card-title">5 个建立日常安全意识的习惯：从认识风险开始</h3>
+      <p class="card-body">真正的自卫并非只有肢体技巧，而是从日常生活中培养出的情境感知能力。本文介绍如何在不同场合快速评估风险、建立安全习惯，以及如何在压力下保持冷静判断。</p>
+      <a href="#" class="card-link">阅读全文</a>
+    </div>
+    <div class="featured-card">
+      <p class="card-tag">法律 · 速查</p>
+      <h3 class="card-title">遭受性骚扰后，我该怎么做？</h3>
+      <p class="card-body">从取证、报案到投诉的完整步骤，含职场与公共场所两类情形。</p>
+      <a href="#" class="card-link">阅读指引</a>
+    </div>
+    <div class="featured-card">
+      <p class="card-tag">心理支持</p>
+      <h3 class="card-title">创伤后的身心反应：这些都是正常的</h3>
+      <p class="card-body">了解创伤反应，不让自我怀疑加深伤害。</p>
+      <a href="#" class="card-link">阅读文章</a>
+    </div>
+    <div class="featured-card">
+      <p class="card-tag">法律 · 保护令</p>
+      <h3 class="card-title">申请人身安全保护令完整流程图解</h3>
+      <p class="card-body">一步一步说明如何向法院申请保护令，需要准备哪些材料。</p>
+      <a href="#" class="card-link">查看图解</a>
+    </div>
+    <div class="featured-card">
+      <p class="card-tag">资源 · 全国</p>
+      <h3 class="card-title">全国家暴庇护与妇联组织一览</h3>
+      <p class="card-body">按省市整理的实体机构与联系方式。</p>
+      <a href="#" class="card-link">查看资源</a>
+    </div>
+  </div>
+</section>
+
+<!-- EMERGENCY BANNER -->
+<div class="emergency-banner">
+  <div>
+    <h2 class="emergency-title">现在需要帮助？</h2>
+    <p class="emergency-desc">请直接拨打以下电话。所有热线均提供免费咨询，全年无休。</p>
+  </div>
+  <div class="emergency-grid">
+    <div class="emergency-item">
+      <span class="emergency-num">12338</span>
+      <span class="emergency-label">妇女权益保护热线</span>
+    </div>
+    <div class="emergency-item">
+      <span class="emergency-num">110</span>
+      <span class="emergency-label">警察报案</span>
+    </div>
+    <div class="emergency-item">
+      <span class="emergency-num">12333</span>
+      <span class="emergency-label">劳动权益保障</span>
+    </div>
+    <div class="emergency-item">
+      <span class="emergency-num">400-161-9995</span>
+      <span class="emergency-label">心理援助热线</span>
+    </div>
+  </div>
+</div>
+
+<!-- TOPICS INDEX -->
+<section class="topics-section" id="topics">
+  <div class="section-header" style="text-align:left;padding:0 0 0;">
+    <p class="section-label">主题索引</p>
+    <h2 class="section-title">所有资料分类</h2>
+  </div>
+  <div class="topics-grid">
+    <a href="#" class="topic-item"><span class="topic-name">情境感知与风险评估</span><span class="topic-count">12 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">基础防身动作图解</span><span class="topic-count">8 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">网络安全与数字隐私</span><span class="topic-count">9 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">性骚扰认定与法律</span><span class="topic-count">7 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">《反家庭暴力法》解读</span><span class="topic-count">6 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">人身安全保护令申请</span><span class="topic-count">5 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">职场性骚扰投诉</span><span class="topic-count">8 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">报案与取证指引</span><span class="topic-count">10 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">法律援助资源</span><span class="topic-count">4 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">全国求助热线汇总</span><span class="topic-count">1 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">庇护安置机构</span><span class="topic-count">3 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">线上咨询与公益组织</span><span class="topic-count">6 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">创伤反应与自我理解</span><span class="topic-count">11 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">如何寻找心理咨询师</span><span class="topic-count">5 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">陪伴者支持指引</span><span class="topic-count">7 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">国内女性安全调查数据</span><span class="topic-count">8 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">学术研究精选导读</span><span class="topic-count">14 篇</span></a>
+    <a href="#" class="topic-item"><span class="topic-name">深度新闻与调查报道</span><span class="topic-count">11 篇</span></a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer id="about">
+  <div class="footer-top">
+    <div>
+      <p class="footer-brand">护盾 Shield</p>
+      <p class="footer-tagline">
+        这个平台由关心女性安全的个人志愿维护，<br>
+        所有资料均基于公开信息整理，不取代专业法律或医疗建议。<br><br>
+        如发现资料有误或需要更新，欢迎来信告知。
+      </p>
+    </div>
+    <div>
+      <p class="footer-col-title">自卫技巧</p>
+      <ul class="footer-links">
+        <li><a href="#">情境感知</a></li>
+        <li><a href="#">基础动作</a></li>
+        <li><a href="#">防身工具</a></li>
+        <li><a href="#">儿童安全教育</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">法律与资源</p>
+      <ul class="footer-links">
+        <li><a href="#">法律条文速查</a></li>
+        <li><a href="#">保护令申请</a></li>
+        <li><a href="#">求助热线</a></li>
+        <li><a href="#">庇护机构</a></li>
+      </ul>
+    </div>
+    <div>
+      <p class="footer-col-title">关于</p>
+      <ul class="footer-links">
+        <li><a href="#">平台说明</a></li>
+        <li><a href="#">资料来源</a></li>
+        <li><a href="#">联系我们</a></li>
+        <li><a href="#">贡献资料</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span>© 2025 护盾 Shield · 所有资料免费开放</span>
+    <span>本站不收集个人资料</span>
+  </div>
+</footer>
+
+<!-- EMERGENCY MODAL -->
+<div class="modal-overlay" id="modal" onclick="closeModalOutside(event)">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <p class="modal-sub">紧急求助</p>
+    <h2 class="modal-title">需要立即帮助？</h2>
+    <p style="font-size:0.85rem;color:var(--muted);margin-bottom:1.5rem;line-height:1.7">以下均为免费热线，提供保密咨询服务。</p>
+    <ul class="hotline-list">
+      <li class="hotline-item">
+        <span class="hotline-name">妇女权益保护热线</span>
+        <a href="tel:12338" class="hotline-num">12338</a>
+      </li>
+      <li class="hotline-item">
+        <span class="hotline-name">警察报案</span>
+        <a href="tel:110" class="hotline-num">110</a>
+      </li>
+      <li class="hotline-item">
+        <span class="hotline-name">心理援助热线</span>
+        <a href="tel:4001619995" class="hotline-num">400-161-9995</a>
+      </li>
+      <li class="hotline-item">
+        <span class="hotline-name">法律援助热线</span>
+        <a href="tel:12348" class="hotline-num">12348</a>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<script>
+  function openModal() {
+    document.getElementById('modal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('modal').classList.remove('open');
+  }
+
+  function closeModalOutside(e) {
+    if (e.target === document.getElementById('modal')) closeModal();
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape') closeModal();
+  });
+</script>
+</body>
+</html>
